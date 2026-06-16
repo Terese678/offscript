@@ -2,6 +2,8 @@
 // Built with React + Framer Motion + QVAC SDK
 // Every line commented so any filmmaker-developer can understand it
 
+import ScriptLibrary, { saveToLibrary } from "./ScriptLibrary"
+
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 
@@ -230,6 +232,7 @@ function WorkingTool() {
   const [response, setResponse] = useState("")
   const [loading, setLoading] = useState(false)
   const [activeTemplate, setActiveTemplate] = useState(null)
+  const [showLibrary, setShowLibrary] = useState(false)
 
   // When filmmaker clicks a template, fill the text area with it
   function selectTemplate(template) {
@@ -250,6 +253,7 @@ function WorkingTool() {
       })
       const data = await res.json()
       setResponse(data.result)
+      saveToLibrary(prompt, data.result, activeTemplate || "Script")
     } catch (err) {
       setResponse("Could not connect to local AI. Make sure the Offscript server is running on port 3001.")
     }
@@ -295,18 +299,40 @@ function WorkingTool() {
           </span>
         </div>
 
-        {/* Offline status indicator */}
-        <div style={{
-          display: "flex", alignItems: "center", gap: "8px",
-          background: "#0c1a0c", border: "1px solid #1a3020",
-          borderRadius: "20px", padding: "6px 14px",
-        }}>
-          <motion.div
-            animate={{ opacity: [1, 0.3, 1] }}
-            transition={{ duration: 2, repeat: Infinity }}
-            style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#4a9060" }}
-          />
-          <span style={{ fontSize: "11px", color: "#4a9060" }}>AI running offline</span>
+        <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+          {/* Offline status indicator */}
+          <div style={{
+            display: "flex", alignItems: "center", gap: "8px",
+            background: "#0c1a0c", border: "1px solid #1a3020",
+            borderRadius: "20px", padding: "6px 14px",
+          }}>
+            <motion.div
+              animate={{ opacity: [1, 0.3, 1] }}
+              transition={{ duration: 2, repeat: Infinity }}
+              style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#4a9060" }}
+            />
+            <span style={{ fontSize: "11px", color: "#4a9060" }}>AI running offline</span>
+          </div>
+
+          {/* Library button */}
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.97 }}
+            onClick={() => setShowLibrary(true)}
+            style={{
+              background: "transparent",
+              border: "1px solid #1e1a14",
+              color: "#c8b898",
+              borderRadius: "20px",
+              padding: "6px 14px",
+              fontSize: "11px",
+              cursor: "pointer",
+              fontFamily: "Inter, sans-serif",
+              letterSpacing: "1px",
+            }}
+          >
+            📚 Library
+          </motion.button>
         </div>
       </div>
 
@@ -427,6 +453,15 @@ function WorkingTool() {
         </div>
       </div>
 
+      <AnimatePresence>
+        {showLibrary && (
+          <ScriptLibrary
+            onClose={() => setShowLibrary(false)}
+            onLoad={(p, r) => { setPrompt(p); setResponse(r); }}
+          />
+        )}
+      </AnimatePresence>
+
       {/* Footer */}
       <div style={{
         borderTop: "1px solid #1e1a14",
@@ -458,3 +493,4 @@ export default function App() {
     </div>
   )
 }
+
