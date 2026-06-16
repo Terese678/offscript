@@ -4,11 +4,13 @@
 
 Offscript is an offline AI assistant built for filmmakers who work in locations with no internet. Write scenes, dialogue, shot lists, and character profiles — all generated locally on your device using QVAC SDK.
 
+No external APIs fully local via QVAC runtime
+
 ## The Story
 
 Kofi is a young filmmaker on location in rural Ghana. Golden hour is dying. His internet died 3 hours ago. His scene isn't working.
 
-He opens his laptop. Offscript loads. He smiles.
+He opens his laptop. Offscript loads. He smiles. 
 
 ## Features
 
