@@ -1,13 +1,13 @@
-// qvac.js — The QVAC service
-// Writes prompt to a file, bare-server.js picks it up and writes the response
-// This avoids the conflict of spawning bare from inside Node.js
+// qvac.js: The LLM generation service
+// Writes the prompt to a file, bare-server.js picks it up, generates a response and writes it back
+// Express polls for the response file and returns it to the frontend
 
 import { writeFileSync, readFileSync, existsSync, unlinkSync } from "fs"
 import path from "path"
 
-const PROMPT_FILE = path.join(process.cwd(), "prompt.txt")
-const RESPONSE_FILE = path.join(process.cwd(), "response.txt")
-const STATUS_FILE = path.join(process.cwd(), "status.txt")
+const PROMPT_FILE = path.join(process.cwd(), "..", "prompt.txt")
+const RESPONSE_FILE = path.join(process.cwd(), "..", "response.txt")
+const STATUS_FILE = path.join(process.cwd(), "..", "status.txt")
 
 export async function generateText(prompt) {
   // Clear old response file if it exists

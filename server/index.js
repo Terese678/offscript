@@ -4,6 +4,7 @@
 import express from "express"
 import cors from "cors"
 import generateRoute from "./routes/generate.js"
+import transcribeRoute from "./routes/transcribe.js"
 
 const PORT = 3001
 
@@ -17,6 +18,9 @@ app.use(express.json())
 
 // Connect the generate route
 app.use("/generate", generateRoute)
+
+// Connect the transcribe route
+app.use("/transcribe", transcribeRoute)
 
 // Health check
 app.get("/", (req, res) => {
