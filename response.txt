@@ -1,25 +1,16 @@
-**Scene: A Man Riding a Bike in a City Park**  
-
-*The scene opens with a dimly lit city park. A man rides a red bicycle, wearing a hoodie and a weathered jacket. The bike shop behind them is a modest storefront with a sign reading “Bike Shop: Find Your Ride.” The man’s eyes are scanning the surroundings, and he looks around as if inspecting something.*  
-
-**Man (Riding Bike):** (smiling) “Hey, that’s the bike I need for the trip.”  
-
-*The man pauses, notices a woman at the shop, and smiles. She steps up, takes the bike, and walks toward the exit. The man looks at the bike, then turns to the woman. They exchange a glance, and the man smiles again.*  
-
-**Man (Riding Bike):** “You’re my bike.”  
-
-**Woman (at Bike Shop):** “Thanks for the ride.”  
-
-*The scene ends with the man walking past the shop, the woman leaving with the bike, and the man smiling as he heads off into the city, the bike in hand.*  
-
-**Shot List:**  
-- **Scene 1:** 15 seconds: Man and woman entering the bike shop.  
-- **Scene 2:** 25 seconds: Man riding the bike, smiling.  
-- **Scene 3:** 15 seconds: Woman steps up, takes the bike, and leaves.  
-- **Scene 4:** 20 seconds: Man and woman exchange smiles, the man walks off.  
+**Scene:** A warm, dimly lit bedroom. A boy, 12 years old, is sitting on a chair, crying softly. His father, a stoic man in his late 30s, sits nearby, listening. The boy’s tears mix with the scent of coffee and a warm blanket. The room feels quiet, heavy with the weight of his emotions.  
 
 **Dialogue:**  
-- **Man:** “You’re my bike.”  
-- **Woman:** “Thanks for the ride.”  
+*Boy (whispering):* (clutches his father’s hand) I don’t know how I’m supposed to be… I’m so lost. I don’t know what I should do.  
+*Father (soothing):* (gently patting the boy’s back) You don’t need to cry; you’re not alone. I’m here for you.  
 
-*End of scene.*
+**Shot list:**  
+- Close-up of boy’s trembling hands and face.  
+- Father’s comforting presence.  
+- Quiet, ambient sound of a soft breeze.  
+
+**Character Profile:**  
+- **Boy:** 12 years old, emotional and introspective, with a deep, vulnerable vulnerability.  
+- **Father:** Stoic and supportive, with a warm heart, providing comfort during tough times.  
+
+The scene ends with a soft, warm embrace, leaving the boy and father in peace.

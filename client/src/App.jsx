@@ -233,6 +233,8 @@ function WorkingTool() {
   const [loading, setLoading] = useState(false)
   const [activeTemplate, setActiveTemplate] = useState(null)
   const [showLibrary, setShowLibrary] = useState(false)
+  const [recording, setRecording] = useState(false)
+  const [mediaRecorder, setMediaRecorder] = useState(null)
 
   // When filmmaker clicks a template, fill the text area with it
   function selectTemplate(template) {
@@ -258,6 +260,51 @@ function WorkingTool() {
       setResponse("Could not connect to local AI. Make sure the Offscript server is running on port 3001.")
     }
     setLoading(false)
+  }
+
+  // Start recording from the microphone
+  async function startRecording() {
+    const stream = await navigator.mediaDevices.getUserMedia({ 
+      audio: {
+        echoCancellation: true,
+        noiseSuppression: true,
+        sampleRate: 16000
+      } 
+    })
+    const recorder = new MediaRecorder(stream, { mimeType: "audio/webm" })
+    const chunks = []
+
+    recorder.ondataavailable = (e) => chunks.push(e.data)
+
+    recorder.onstop = async () => {
+      const blob = new Blob(chunks, { type: "audio/webm" })
+      const formData = new FormData()
+      formData.append("audio", blob, "audio.wav")
+
+      try {
+        const res = await fetch("http://localhost:3001/transcribe", {
+          method: "POST",
+          body: formData,
+        })
+        const data = await res.json()
+        if (data.transcript) setPrompt(data.transcript)
+      } catch (err) {
+        console.error("Transcription failed:", err)
+      }
+    }
+
+    recorder.start()
+    setMediaRecorder(recorder)
+    setRecording(true)
+  }
+
+  // Stop recording
+  function stopRecording() {
+    if (mediaRecorder) {
+      mediaRecorder.stop()
+      mediaRecorder.stream.getTracks().forEach(t => t.stop())
+    }
+    setRecording(false)
   }
 
   return (
@@ -378,9 +425,29 @@ function WorkingTool() {
         {/* Right writing area */}
         <div style={{ padding: "24px 28px", display: "flex", flexDirection: "column", gap: "16px" }}>
           <div>
-            <p style={{ fontSize: "11px", letterSpacing: "2px", textTransform: "uppercase", color: "#3a3020", marginBottom: "8px", marginTop: 0 }}>
-              Your prompt
-            </p>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "8px" }}>
+              <p style={{ fontSize: "11px", letterSpacing: "2px", textTransform: "uppercase", color: "#3a3020", margin: 0 }}>
+                Your prompt
+              </p>
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.97 }}
+                onClick={recording ? stopRecording : startRecording}
+                style={{
+                  background: recording ? "#3a0000" : "transparent",
+                  border: `1px solid ${recording ? "#e82020" : "#1e1a14"}`,
+                  color: recording ? "#e82020" : "#c8b898",
+                  borderRadius: "20px",
+                  padding: "6px 14px",
+                  fontSize: "11px",
+                  cursor: "pointer",
+                  fontFamily: "Inter, sans-serif",
+                  letterSpacing: "1px",
+                }}
+              >
+                {recording ? "⏹ Stop recording" : "🎙️ Speak prompt"}
+              </motion.button>
+            </div>
             <textarea
               value={prompt}
               onChange={(e) => setPrompt(e.target.value)}
@@ -493,4 +560,3 @@ export default function App() {
     </div>
   )
 }
-
