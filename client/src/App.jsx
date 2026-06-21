@@ -1,8 +1,10 @@
-// Offscript — Offline AI assistant for filmmakers
+// Offscript: Offline AI assistant for filmmakers
 // Built with React + Framer Motion + QVAC SDK
 // Every line commented so any filmmaker-developer can understand it
 
 import ScriptLibrary, { saveToLibrary } from "./ScriptLibrary"
+
+import ContinuityChecker from "./ContinuityChecker"
 
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
@@ -129,7 +131,7 @@ function CinematicLanding({ onEnter }) {
         transition={{ delay: 0.5, duration: 1.2, ease: "easeOut" }}
         style={{ textAlign: "center", zIndex: 2, padding: "0 20px" }}
       >
-        {/* Watery glassy title — light refracting through the letters */}
+        {/* Watery glassy title: light refracting through the letters */}
         <h1 style={{
           fontFamily: "'Playfair Display', Georgia, serif",
           fontSize: "clamp(36px, 6vw, 72px)",
@@ -145,7 +147,7 @@ function CinematicLanding({ onEnter }) {
           Offscript
         </h1>
 
-        {/* Tagline — glassy water shimmer */}
+        {/* Tagline: glassy water shimmer */}
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -191,7 +193,7 @@ function CinematicLanding({ onEnter }) {
         </motion.button>
       </motion.div>
 
-      {/* Bottom credit — visible this time */}
+      {/* Bottom credit: visible this time */}
       <motion.p
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -235,6 +237,7 @@ function WorkingTool() {
   const [showLibrary, setShowLibrary] = useState(false)
   const [recording, setRecording] = useState(false)
   const [mediaRecorder, setMediaRecorder] = useState(null)
+  const [showContinuity, setShowContinuity] = useState(false) // our continuity state
 
   // When filmmaker clicks a template, fill the text area with it
   function selectTemplate(template) {
@@ -380,6 +383,26 @@ function WorkingTool() {
           >
             📚 Library
           </motion.button>
+
+          {/* Continuity button */}
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.97 }}
+            onClick={() => setShowContinuity(true)}
+            style={{
+              background: "transparent",
+              border: "1px solid #1e1a14",
+              color: "#c8b898",
+              borderRadius: "20px",
+              padding: "6px 14px",
+              fontSize: "11px",
+              cursor: "pointer",
+              fontFamily: "Inter, sans-serif",
+              letterSpacing: "1px",
+            }}
+          >
+            🔍 Continuity
+          </motion.button>
         </div>
       </div>
 
@@ -390,7 +413,7 @@ function WorkingTool() {
         flex: 1,
       }}>
 
-        {/* Left sidebar — templates */}
+        {/* Left sidebar, templates */}
         <div style={{
           padding: "20px 16px",
           borderRight: "1px solid #1e1a14",
@@ -492,7 +515,7 @@ function WorkingTool() {
             {loading ? "Generating locally..." : "Generate offline ›"}
           </motion.button>
 
-          {/* AI response — slides in when ready */}
+          {/* AI response, slides in when ready */}
           <AnimatePresence>
             {response && (
               <motion.div
@@ -525,6 +548,14 @@ function WorkingTool() {
           <ScriptLibrary
             onClose={() => setShowLibrary(false)}
             onLoad={(p, r) => { setPrompt(p); setResponse(r); }}
+          />
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {showContinuity && (
+          <ContinuityChecker
+            onClose={() => setShowContinuity(false)}
           />
         )}
       </AnimatePresence>

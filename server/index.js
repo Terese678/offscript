@@ -1,10 +1,11 @@
-// index.js — The main server file
+// index.js: The main server file
 // This file has ONE job: start the Express server and connect all the pieces
 
 import express from "express"
 import cors from "cors"
 import generateRoute from "./routes/generate.js"
 import transcribeRoute from "./routes/transcribe.js"
+import continuityRoute from "./routes/continuity.js"
 
 const PORT = 3001
 
@@ -21,6 +22,9 @@ app.use("/generate", generateRoute)
 
 // Connect the transcribe route
 app.use("/transcribe", transcribeRoute)
+
+// Connect the continuity checking route
+app.use("/continuity", continuityRoute)
 
 // Health check
 app.get("/", (req, res) => {

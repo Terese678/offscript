@@ -29,7 +29,7 @@ export async function generateText(prompt) {
         return
       }
       // Timeout after 3 minutes
-      if (Date.now() - start > 180000) {
+      if (Date.now() - start > 600000) {
         clearInterval(check)
         reject(new Error("Timeout waiting for AI response"))
       }
